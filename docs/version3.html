@@ -1,0 +1,52 @@
+<html>
+<head>
+    <style>
+        .output {color: chartreuse} 
+    </style>
+    
+    <!--LOAD p5.js library-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    
+    <script>
+        
+        //STORE data in "global" variables known to all functions
+        var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?begin_date=20120202&end_date=21140202&facet=true&facet_fields=day_of_week&facet_filter=true&sort=relevance&api-key=zGQ7xiVtQL5q3AMC2oGBGgC4yDshAx29"
+        var articleCount = 0
+        
+        //SETUP is a standard way P5 starts a script
+        function setup() {
+            //P5 usually used for drawing
+            noCanvas();
+            //SEND the URL and when the data comes back, run the function "gotData"
+            loadJSON(url,gotData)
+        }
+        
+        //gotData for now just announces itself
+        function gotData(data) {
+            appendToPage (data)
+            //create a for loop; control for loop with
+            var text = ''
+            for (i=0; i <data.response.docs.length; i++) {
+                text = text + '<br />' + data.response.docs[i].headline.main
+            }
+            document.getElementById("test_output").innerHTML = data.response.docs[0].headline.main
+            }
+        
+        function appendToPage (data) {
+            //whatever it is you're appending I guess...determine for loop
+            var articles = data.response.docs;
+            //something new
+            for (var i = 0; i < articles.lengthl; i++) {
+                articleCount++
+                h = document.createElement('h3')
+            }
+        }
+        
+        
+    </script>
+</head>
+    <body>
+    <h1>New York Times API: Search Articles Between 2012 and 2018</h1>
+    <p id="test_output" class="="output></p>
+    </body>
+</html>
